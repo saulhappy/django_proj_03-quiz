@@ -39,6 +39,13 @@ class Question(models.Model):
     def __str__(self):
         return self.title
 
+class Answer(models.Model):
+    question = models.ForeignKey(Question, related_name='answer', on_delete=models.CASCADE)
+    answer_text = models.CharField(max_length=140, verbose_name="Answer Text")
+    is_correct = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return self.answer_text
 
 
 
