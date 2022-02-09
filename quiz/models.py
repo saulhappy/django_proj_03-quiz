@@ -1,4 +1,3 @@
-from unicodedata import category
 from django.db import models
 
 class Category(models.Model):
@@ -9,7 +8,7 @@ class Category(models.Model):
 
 class Quizzes(models.Model):
     title = models.CharField(max_length=140, default="New Quiz")
-    category = models.ForeignKey(Category, default=1, on_delete=models.SET_NULL)
+    category = models.ForeignKey(Category, default=1, null=True, blank=True, on_delete=models.SET_NULL)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -21,7 +20,7 @@ class Question(models.Model):
         (1, 'Beginner'),
         (2, 'Intermediate'),
         (3, 'Advanced'),
-        (4, 'Expert')
+        (4, 'Expert'),
     )
 
     METHOD_CHOICES = (
@@ -44,7 +43,7 @@ class Answer(models.Model):
     answer_text = models.CharField(max_length=140, verbose_name="Answer Text")
     is_correct = models.BooleanField(default=False)
 
-    def __str__(self) -> str:
+    def __str__(self):
         return self.answer_text
 
 
