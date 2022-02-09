@@ -23,3 +23,13 @@ class AnswerType(DjangoObjectType):
     class Meta:
         model = Answer
         fields = ("question", "answer_text")
+
+class Query(graphene.ObjectType):
+    quiz = graphene.String()
+
+    def resolve_quiz():
+        return f"this is the first question"
+
+
+
+schema = graphene.Schema(query=Query)
