@@ -10,7 +10,7 @@ class CategoryType(DjangoObjectType):
 class QuizzesType(DjangoObjectType):
     class Meta:
         model = Quizzes
-        fields = ("id", "title", "category", "quiz")
+        fields = ("id", "title", "category")
 
 
 class QuestionType(DjangoObjectType):
@@ -25,7 +25,18 @@ class AnswerType(DjangoObjectType):
         fields = ("question", "answer_text")
 
 class Query(graphene.ObjectType):
-    all_quizzes = DjangoListField(QuizzesType)
+    all_quizzes = graphene.Field(QuizzesType)
+    all_questions = graphene.List(QuestionType, id=graphene.Int())
+    all_answers = graphene.List(AnswerType, id=graphene.Int())
+
+    def resolve_all_quizzes(root, info):
+        return Quizzes.objects.all()
+
+    def resolve_all_questions(root, info, id):
+        return Question.objects.filter(pk=id)
+
+    def resolve_all_answers(root, info, id):
+        return Answer.objects.filter(question=id)
 
 
 schema = graphene.Schema(query=Query)

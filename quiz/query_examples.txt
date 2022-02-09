@@ -1,0 +1,31 @@
+query getQuestion($id: Int = 2) {
+  allQuestions(id: $id) {
+    title
+  }
+  allAnswers(id: $id) {
+    answerText
+  }
+}
+
+RESULT:
+
+{
+  "data": {
+    "allQuestions": [
+      {
+        "title": "Greenland was a colony of which country until 1981?"
+      }
+    ],
+    "allAnswers": [
+      {
+        "answerText": "Denmark"
+      },
+      {
+        "answerText": "USA"
+      },
+      {
+        "answerText": "Finland"
+      }
+    ]
+  }
+}
